@@ -22,3 +22,25 @@ export type AuthTokens = {
 export type AuthSession = AuthTokens & {
   user: AuthUser;
 };
+
+export type RefreshTokenRequest = {
+  refreshToken: string;
+};
+
+export type RefreshTokenResponse = {
+  accessToken: string;
+  refreshToken?: string;
+};
+
+/**
+ * Error response from auth endpoints.
+ * Contains validation errors for login/register forms.
+ */
+export type AuthError = {
+  code: string;
+  message: string;
+  fieldErrors?: Array<{
+    field: string;
+    message: string;
+  }>;
+};

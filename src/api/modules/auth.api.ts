@@ -1,5 +1,10 @@
-import type { AuthSession, LoginRequest, RegisterRequest } from '@/types/auth';
-
+import type {
+  AuthSession,
+  LoginRequest,
+  RefreshTokenRequest,
+  RefreshTokenResponse,
+  RegisterRequest,
+} from '@/types/auth';
 import { authApiClient } from '../http/clients';
 
 /**
@@ -12,5 +17,15 @@ export async function login(body: LoginRequest): Promise<AuthSession> {
 
 export async function register(body: RegisterRequest): Promise<AuthSession> {
   const { data } = await authApiClient.post<AuthSession>('/api/auth/register', body);
+  return data;
+}
+
+
+/**
+ * Refresh access token using refresh token.
+ * Typically called when a 401 is received.
+ */
+export async function refreshToken(body: RefreshTokenRequest): Promise<RefreshTokenResponse> {
+  const { data } = await authApiClient.post<RefreshTokenResponse>('/api/auth/refresh', body);
   return data;
 }

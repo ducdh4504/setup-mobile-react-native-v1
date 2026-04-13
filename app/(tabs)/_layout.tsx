@@ -1,7 +1,20 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 
+import { useAuthStore } from '@/store/authStore';
+
+/**
+ * Tabs layout guard.
+ * Redirects unauthenticated users away from protected screens.
+ */
 export default function TabLayout() {
+  const accessToken = useAuthStore((s) => s.accessToken);
+
+  // If not logged in, redirect to login
+  if (!accessToken) {
+    return <Redirect href="/(auth)/login" />;
+  }
+
   return (
     <Tabs
       screenOptions={{

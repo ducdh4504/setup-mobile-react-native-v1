@@ -9,6 +9,7 @@ type AuthState = {
   refreshToken: string | null;
   user: AuthUser | null;
   setSession: (tokens: { accessToken: string; refreshToken?: string | null }, user: AuthUser) => void;
+  setTokens: (tokens: { accessToken: string; refreshToken?: string | null }) => void;
   clearSession: () => void;
 };
 
@@ -23,6 +24,11 @@ export const useAuthStore = create<AuthState>()(
           accessToken,
           refreshToken: refreshToken ?? null,
           user,
+        }),
+      setTokens: ({ accessToken, refreshToken }) =>
+        set({
+          accessToken,
+          refreshToken: refreshToken ?? null,
         }),
       clearSession: () =>
         set({

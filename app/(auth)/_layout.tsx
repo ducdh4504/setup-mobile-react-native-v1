@@ -1,6 +1,19 @@
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 
+import { useAuthStore } from '@/store/authStore';
+
+/**
+ * Auth layout guard.
+ * Redirects logged-in users away from login/register screens.
+ */
 export default function AuthLayout() {
+  const accessToken = useAuthStore((s) => s.accessToken);
+
+  // If already logged in, redirect to home
+  if (accessToken) {
+    return <Redirect href="/(tabs)/home" />;
+  }
+
   return (
     <Stack
       screenOptions={{
